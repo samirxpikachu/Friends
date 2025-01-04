@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends Rating Board</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1e272e 0%, #485460 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #adminLoginBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            font-size: 20px;
+        }
+        #adminLoginBtn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .friend-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+            text-align: center;
+        }
+        .friend-card:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: block;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .friend-name {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .rating {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .rating-change {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            height: 1.5rem;
+        }
+        .rating-change.positive { color: #00ff88; }
+        .rating-change.negative { color: #ff4444; }
+        .details-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        .details-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .rank-badge {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: black;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .modal-content {
+            background: #1e272e;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+            color: white;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+        }
+        .admin-panel {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            display: none;
+        }
+        .admin-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+        }
+        .tab-btn.active {
+            background: #00ff88;
+            color: black;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .history-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+        }
+        .history-date {
+            color: #00ff88;
+            font-size: 0.9rem;
+        }
+        .comment-input {
+            width: 100%;
+            min-height: 100px;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            resize: vertical;
+        }
+        input, button {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+        button {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        button:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        .login-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Friends Rating Board</h1>
+        </div>
+        
+        <div class="friends-grid" id="friendsGrid"></div>
+
+        <div class="admin-panel" id="adminPanel">
+            <h2>Admin Panel</h2>
+            <div class="admin-controls">
+                <input type="text" id="friendName" placeholder="Friend Name">
+                <input type="number" id="rating" placeholder="Rating">
+                <button onclick="addFriend()">Add Friend</button>
+                <button onclick="saveFriends()">Save Changes</button>
+            </div>
+        </div>
+
+        <div class="login-panel" id="loginPanel">
+            <h2>Admin Login</h2>
+            <input type="password" id="adminPassword" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <button id="adminLoginBtn" title="Admin Login">⚙️</button>
+    </div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 id="modalName" style="margin-bottom: 2rem;"></h2>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+                <button class="tab-btn" onclick="showTab('history')">Rating History</button>
+                <button class="tab-btn" onclick="showTab('comments')">Comments</button>
+            </div>
+
+            <div id="overviewTab" class="tab-content active">
+                <div id="currentStats"></div>
+            </div>
+
+            <div id="historyTab" class="tab-content">
+                <div class="rating-history" id="ratingHistory"></div>
+            </div>
+
+            <div id="commentsTab" class="tab-content">
+                <div class="comment-section">
+                    <div id="commentsList"></div>
+                    <div id="adminCommentSection" style="display: none;">
+                        <textarea class="comment-input" id="newComment" placeholder="Add a new comment..."></textarea>
+                        <button onclick="addComment()">Add Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "c3a84b934c666ac2f092e2d7b6a9843e"; // Hashed version of "SamirLovesCat"
+        let isAdmin = false;
+
+        let friends = [];
+
+        async function loadFriendsData() {
+    try {
+        const savedFriends = localStorage.getItem('friends');
+        if (savedFriends) {
+            friends = JSON.parse(savedFriends);
+        } else {
+            const response = await fetch('friends.json');
+            const data = await response.json();
+            friends = data.friends;
+            localStorage.setItem('friends', JSON.stringify(friends));
+        }
+         renderFriends();
+        } catch (error) {
+            console.error('Error loading friends data:', error);
+        }}
+        window.addEventListener('DOMContentLoaded', loadFriendsData);
+      
+        function showDetails(name) {
+            const friend = friends.find(f => f.name === name);
+            if (!friend) return;
+
+            const modal = document.getElementById('detailsModal');
+            const modalName = document.getElementById('modalName');
+            const currentStats = document.getElementById('currentStats');
+            const ratingHistory = document.getElementById('ratingHistory');
+            const commentsList = document.getElementById('commentsList');
+            const adminCommentSection = document.getElementById('adminCommentSection');
+
+            modalName.textContent = friend.name;
+            currentStats.innerHTML = `
+                <h3>Current Rating: ${friend.rating}</h3>
+                <p>Rating Change: ${friend.rating - friend.previousRating}</p>
+                <p>Latest Comment: ${friend.comments.length > 0 ? friend.comments[friend.comments.length - 1].text : 'No comments yet'}</p>
+            `;
+
+            ratingHistory.innerHTML = friend.history.map(h => `
+                <div class="history-item">
+                    <div class="history-date">${h.date}</div>
+                    <div>Rating: ${h.rating}</div>
+                    <div>Reason: ${h.reason}</div>
+                </div>
+            `).join('');
+
+            commentsList.innerHTML = friend.comments.map(c => `
+                <div class="history-item">
+                    <div class="history-date">${c.date}</div>
+                    <div>${c.text}</div>
+                    <div>Rating at time: ${c.rating}</div>
+                </div>
+            `).join('');
+
+            adminCommentSection.style.display = isAdmin ? 'block' : 'none';
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+            document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function addComment() {
+            const commentText = document.getElementById('newComment').value;
+            const modalName = document.getElementById('modalName').textContent;
+            const friend = friends.find(f => f.name === modalName);
+            
+            if (commentText && friend) {
+                const newComment = {
+                    date: new Date().toISOString().split('T')[0],
+                    text: commentText,
+                    rating: friend.rating
+                };
+                friend.comments.push(newComment);
+                document.getElementById('newComment').value = '';
+                showDetails(modalName);
+                saveFriends();
+            }
+        }
+
+        function addFriend() {
+            const name = document.getElementById('friendName').value;
+            const rating = parseInt(document.getElementById('rating').value);
+
+            if (name && rating) {
+                friends.push({
+                    name,
+                    rating,
+                    previousRating: rating,
+                    imageUrl: "/api/placeholder/120/120",
+                    comments: [{ date: new Date().toISOString().split('T')[0], text: "Initial rating", rating }],
+                    history: [{ date: new Date().toISOString().split('T')[0], rating, reason: "Initial rating" }]
+                });
+                // Continuing the script section:
+
+                renderFriends();
+                document.getElementById('friendName').value = '';
+                document.getElementById('rating').value = '';
+            }
+        }
+
+        function deleteFriend(name) {
+            if (confirm(`Are you sure you want to delete ${name}?`)) {
+                friends = friends.filter(f => f.name !== name);
+                renderFriends();
+                saveFriends();
+            }
+        }
+
+        function updateRating(name) {
+            const newRating = prompt(`Enter new rating for ${name}:`);
+            const reason = prompt("Why are you changing the rating?");
+            
+            if (newRating !== null && !isNaN(newRating) && reason) {
+                const friend = friends.find(f => f.name === name);
+                if (friend) {
+                    friend.previousRating = friend.rating;
+                    friend.rating = parseInt(newRating);
+                    
+                    const historyEntry = {
+                        date: new Date().toISOString().split('T')[0],
+                        rating: parseInt(newRating),
+                        reason: reason
+                    };
+                    
+                    friend.history.push(historyEntry);
+                    friend.comments.push({
+                        date: new Date().toISOString().split('T')[0],
+                        text: `Rating changed to ${newRating}: ${reason}`,
+                        rating: parseInt(newRating)
+                    });
+                    
+                    renderFriends();
+                    saveFriends();
+                }
+            }
+        }
+
+        function renderFriends() {
+            const grid = document.getElementById('friendsGrid');
+            grid.innerHTML = '';
+            
+            friends.sort((a, b) => b.rating - a.rating).forEach((friend, index) => {
+                const card = document.createElement('div');
+                card.className = 'friend-card';
+                
+                const ratingChange = friend.rating - friend.previousRating;
+                const ratingChangeClass = ratingChange > 0 ? 'positive' : ratingChange < 0 ? 'negative' : '';
+                const ratingChangeText = ratingChange === 0 ? '' : 
+                    `${ratingChange > 0 ? '+' : ''}${ratingChange}`;
+
+                card.innerHTML = `
+                    ${index < 3 ? `<div class="rank-badge">${index + 1}</div>` : ''}
+                    <img src="${friend.imageUrl}" alt="${friend.name}" class="profile-pic">
+                    <h3 class="friend-name">${friend.name}</h3>
+                    <div class="rating">${friend.rating}</div>
+                    <div class="rating-change ${ratingChangeClass}">${ratingChangeText}</div>
+                    <button class="details-btn" onclick="showDetails('${friend.name}')">View Details</button>
+                    ${isAdmin ? `
+                        <button onclick="deleteFriend('${friend.name}')" style="margin-top: 1rem;">Delete</button>
+                        <button onclick="updateRating('${friend.name}')" style="margin-top: 0.5rem;">Update Rating</button>
+                    ` : ''}
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function login() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('loginPanel').style.display = 'none';
+                renderFriends();
+            } else {
+                alert('Incorrect password!');
+            }
+            document.getElementById('adminPassword').value = '';
+        }
+
+        document.getElementById('adminLoginBtn').addEventListener('click', () => {
+            document.getElementById('loginPanel').style.display = 'block';
+        });
+
+        function saveFriends() {
+            localStorage.setItem('friends', JSON.stringify(friends));
+            alert('Changes saved!');
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            const loginPanel = document.getElementById('loginPanel');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+            if (event.target === loginPanel) {
+                loginPanel.style.display = "none";
+            }
+        }
+
+        const savedFriends = localStorage.getItem('friends');
+        if (savedFriends) {
+            friends = JSON.parse(savedFriends);
+        }
+
+        renderFriends();
+    </script>
+</body>
+</html>
