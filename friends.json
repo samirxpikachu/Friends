@@ -1,0 +1,127 @@
+{
+  "config": {
+    "adminPassword": "c3a84b934c666ac2f092e2d7b6a9843e"
+  },
+  "friends": [
+    {
+      "name": "Richi",
+      "rating": 92,
+      "previousRating": 92,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 92 }],
+      "history": [{ "date": "2024-01-01", "rating": 92, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Sumaiya",
+      "rating": 86,
+      "previousRating": 86,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 86 }],
+      "history": [{ "date": "2024-01-01", "rating": 86, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Cupcake",
+      "rating": 85,
+      "previousRating": 85,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 85 }],
+      "history": [{ "date": "2024-01-01", "rating": 85, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Afi",
+      "rating": 85,
+      "previousRating": 85,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 85 }],
+      "history": [{ "date": "2024-01-01", "rating": 85, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Honey pie",
+      "rating": 85,
+      "previousRating": 85,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 85 }],
+      "history": [{ "date": "2024-01-01", "rating": 85, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Jeba",
+      "rating": 83,
+      "previousRating": 83,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 83 }],
+      "history": [{ "date": "2024-01-01", "rating": 83, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Noushin idk",
+      "rating": 82,
+      "previousRating": 82,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 82 }],
+      "history": [{ "date": "2024-01-01", "rating": 82, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Rose",
+      "rating": 81,
+      "previousRating": 81,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 81 }],
+      "history": [{ "date": "2024-01-01", "rating": 81, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Lima",
+      "rating": 81,
+      "previousRating": 81,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 81 }],
+      "history": [{ "date": "2024-01-01", "rating": 81, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Anotora",
+      "rating": 80,
+      "previousRating": 80,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 80 }],
+      "history": [{ "date": "2024-01-01", "rating": 80, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Jerin",
+      "rating": 80,
+      "previousRating": 80,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 80 }],
+      "history": [{ "date": "2024-01-01", "rating": 80, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Rodoshi",
+      "rating": 79,
+      "previousRating": 79,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 79 }],
+      "history": [{ "date": "2024-01-01", "rating": 79, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Sabi",
+      "rating": 76,
+      "previousRating": 76,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 76 }],
+      "history": [{ "date": "2024-01-01", "rating": 76, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Tisha",
+      "rating": 72,
+      "previousRating": 72,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": 72 }],
+      "history": [{ "date": "2024-01-01", "rating": 72, "reason": "Initial rating" }]
+    },
+    {
+      "name": "Sahara",
+      "rating": -2,
+      "previousRating": -2,
+      "imageUrl": "/api/placeholder/120/120",
+      "comments": [{ "date": "2024-01-01", "text": "Initial rating", "rating": -2 }],
+      "history": [{ "date": "2024-01-01", "rating": -2, "reason": "Initial rating" }]
+    }
+  ]
+}
